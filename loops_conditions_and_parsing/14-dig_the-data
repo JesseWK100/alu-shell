@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This script groups visitors by IP and HTTP status code, showing occurrence count
+
+# Parse the Apache log file, count occurrences, and sort them
+awk '{print $1, $9}' apache-access.log | 
+    awk '{count[$1, $2]++} END {for (ip_status in count) {split(ip_status, arr, SUBSEP); print count[ip_status], arr[1], arr[2]}}' | 
+    sort -nr
