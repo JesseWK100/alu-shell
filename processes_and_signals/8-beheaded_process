@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 # This script kills the 7-highlander process.
 
-# Kill the 7-highlander process
-pkill -f 7-highlander > /dev/null 2>&1
+# Attempt to kill the 7-highlander process
+if pkill -f 7-highlander > /dev/null 2>&1; then
+    echo "OK"
+else
+    echo "./7-highlander is still running"
+fi
