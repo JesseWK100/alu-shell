@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # This script displays a list of all currently running processes in a user-oriented format, including the process hierarchy
 
-ps -e -o user,lstart,pid,%cpu,%mem,vsz,rss,tty,stat,time,command --forest | awk 'NR==1 {$2="STARTED"; print} NR>1 {print}'
+ps -e -o user,stat,pid,tty,command --forest
