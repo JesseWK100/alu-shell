@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 4-to_infinity_and_beyond script
 while true; do
