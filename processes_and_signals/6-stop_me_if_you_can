@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
+# This script sends a termination signal to the 4-to_infinity_and_beyond process.
 
-# This script creates a file to signal the 4-to_infinity_and_beyond process to stop.
+# Get the PID of the 4-to_infinity_and_beyond process
+PID=$(pgrep -f 4-to_infinity_and_beyond)
 
-# Create the stop_signal file
-touch stop_signal
+# Check if the PID was found and send SIGINT (Interrupt)
+if [ -n "$PID" ]; then
+    # Sending the interrupt signal (Ctrl+C equivalent)
+    kill -SIGINT "$PID" > /dev/null 2>&1
+fi
