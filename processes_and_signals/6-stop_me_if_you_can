@@ -1,12 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# 4-to_infinity_and_beyond script
-while true; do
-    echo "To infinity and beyond"
-    sleep 1
-    if [ -f "stop_signal" ]; then
-        rm "stop_signal"  # Clean up the signal file
-        break
-    fi
-done
-echo "Terminated"
+# This script creates a file to signal the 4-to_infinity_and_beyond process to stop.
+
+# Create the stop_signal file
+touch stop_signal
