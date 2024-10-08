@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# This script kills the 7-highlander process
 
 # Find the process ID of the 7-highlander process
 pid=$(ps aux | pgrep "[7]-highlander" | awk '{print $2}')
