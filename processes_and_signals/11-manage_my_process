@@ -9,8 +9,8 @@ start() {
     if [ -f "$PID_FILE" ]; then
         echo "manage_my_process is already running."
     else
-        # Start manage_my_process directly as a detached process
-        exec $PROCESS_SCRIPT &  # Run the process directly in the background
+        # Start manage_my_process in the background and save its PID
+        $PROCESS_SCRIPT &  # Run the process without invoking bash
         echo $! > "$PID_FILE"
         echo "manage_my_process started"
     fi
@@ -21,8 +21,7 @@ stop() {
         # Kill the process and remove the PID file
         kill "$(cat $PID_FILE)"
         rm -f "$PID_FILE"
-        echo "manage_my_process stopped"
-        echo "Good"  # Display "Good" when the PID file is deleted
+        echo "manage_my_process stopped"  # Only display "stopped"
     else
         echo "manage_my_process is not running."
     fi
@@ -34,7 +33,7 @@ restart() {
         rm -f "$PID_FILE"
     fi
     # Restart the process
-    exec $PROCESS_SCRIPT &  # Run the process directly
+    $PROCESS_SCRIPT &
     echo $! > "$PID_FILE"
     echo "manage_my_process restarted"
 }
