@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script reads and formats user information from /etc/passwd
 
 # Set IFS to ':' to split fields in /etc/passwd
