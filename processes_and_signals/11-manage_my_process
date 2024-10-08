@@ -3,15 +3,14 @@
 # Manages the manage_my_process script with start, stop, and restart options
 
 PID_FILE="/var/run/my_process.pid"
-PROCESS_SCRIPT="./manage_my_process"  # Adjust path if needed
+PROCESS_SCRIPT="./manage_my_process"  # Path to your manage_my_process script
 
 start() {
     if [ -f "$PID_FILE" ]; then
         echo "manage_my_process is already running."
     else
-        # Start the process in the background
+        # Start manage_my_process in the background and save its PID
         $PROCESS_SCRIPT &
-        # Save the process ID
         echo $! > "$PID_FILE"
         echo "manage_my_process started"
     fi
@@ -19,9 +18,8 @@ start() {
 
 stop() {
     if [ -f "$PID_FILE" ]; then
-        # Kill the process
+        # Kill the process and remove the PID file
         kill "$(cat $PID_FILE)"
-        # Remove the PID file
         rm -f "$PID_FILE"
         echo "manage_my_process stopped"
     else
@@ -30,12 +28,23 @@ stop() {
 }
 
 restart() {
-    stop
-    start
-    echo "manage_my_process restarted"
+    if [ -f "$PID_FILE" ]; then
+        stop
+        start
+        echo "manage_my_process restarted"
+    else
+        start
+        echo "manage_my_process started and restarted"
+    fi
 }
 
-# Check arguments
+# Display usage message when no or invalid argument is provided
+usage() {
+    echo "Usage: manage_my_process {start|stop|restart}"
+    exit 1
+}
+
+# Main script logic to handle arguments
 case "$1" in
     start)
         start
@@ -47,7 +56,6 @@ case "$1" in
         restart
         ;;
     *)
-        echo "Usage: manage_my_process {start|stop|restart}"
-        exit 1
+        usage
         ;;
 esac
