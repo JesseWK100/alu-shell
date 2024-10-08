@@ -3,14 +3,14 @@
 # Manages the manage_my_process script with start, stop, and restart options
 
 PID_FILE="/var/run/my_process.pid"
-PROCESS_SCRIPT="./manage_my_process"  # Path to your manage_my_process script
+PROCESS_SCRIPT="./manage_my_process"  # Adjust the path to manage_my_process if needed
 
 start() {
     if [ -f "$PID_FILE" ]; then
         echo "manage_my_process is already running."
     else
         # Start manage_my_process in the background and save its PID
-        nohup $PROCESS_SCRIPT > /dev/null 2>&1 &  # Ensure it runs as a process and not in the shell
+        $PROCESS_SCRIPT &  # Run the process without invoking bash
         echo $! > "$PID_FILE"
         echo "manage_my_process started"
     fi
@@ -21,8 +21,7 @@ stop() {
         # Kill the process and remove the PID file
         kill "$(cat $PID_FILE)"
         rm -f "$PID_FILE"
-        echo "manage_my_process stopped"
-        echo "Good"  # Ensure the correct message is displayed when the file is deleted
+        echo "manage_my_process stopped"  # Only display "stopped"
     else
         echo "manage_my_process is not running."
     fi
@@ -30,13 +29,13 @@ stop() {
 
 restart() {
     if [ -f "$PID_FILE" ]; then
-        kill "$(cat $PID_FILE)"  # Manually stop the process without displaying the "stopped" message
+        kill "$(cat $PID_FILE)"
         rm -f "$PID_FILE"
     fi
-    # Restart the process without displaying "started"
-    nohup $PROCESS_SCRIPT > /dev/null 2>&1 &
+    # Restart the process
+    $PROCESS_SCRIPT &
     echo $! > "$PID_FILE"
-    echo "manage_my_process restarted"  # Display only "restarted"
+    echo "manage_my_process restarted"
 }
 
 # Display usage message when no or invalid argument is provided
