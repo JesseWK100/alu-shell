@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script groups visitors by IP and HTTP status code from an Apache log
 
 # Use awk to extract the IP and HTTP status code, count occurrences, and sort by count
