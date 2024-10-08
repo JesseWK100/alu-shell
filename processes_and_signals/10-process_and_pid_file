@@ -9,14 +9,16 @@ signal_handler() {
     case $1 in
         SIGTERM)
             echo "I hate the kill command"
-            # Fall through to SIGQUIT behavior
+            # Cleanup and exit for SIGTERM
+            rm -f /var/run/myscript.pid
+            exit 0
             ;;
         SIGINT)
             echo "Y U no love me?!"
             ;;
         SIGQUIT)
             echo "Cleaning up..."
-            # Delete the PID file
+            # Cleanup and exit for SIGQUIT
             rm -f /var/run/myscript.pid
             exit 0
             ;;
