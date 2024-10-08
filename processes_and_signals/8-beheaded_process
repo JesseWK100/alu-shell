@@ -2,12 +2,12 @@
 # This script kills the 7-highlander process
 
 # Find the process ID of the 7-highlander process
-pid=$(ps aux | pgrep "[7]-highlander" | awk '{print $2}')
+pid=$(pgrep -f "./7-highlander")
 
 # Check if the process ID is found and kill the process
 if [ -n "$pid" ]; then
-	  kill "$pid"
-	    echo "7-highlander process with PID $pid has been killed."
-    else
-	      echo "7-highlander process not found."
+  kill "$pid"
+  echo "7-highlander process has been killed."
+else
+  echo "7-highlander process not found."
 fi
