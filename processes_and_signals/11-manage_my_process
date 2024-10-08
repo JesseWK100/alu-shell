@@ -10,7 +10,7 @@ start() {
         echo "manage_my_process is already running."
     else
         # Start manage_my_process in the background and save its PID
-        $PROCESS_SCRIPT &
+        nohup $PROCESS_SCRIPT > /dev/null 2>&1 &  # Ensure it runs as a process and not in the shell
         echo $! > "$PID_FILE"
         echo "manage_my_process started"
     fi
@@ -22,6 +22,7 @@ stop() {
         kill "$(cat $PID_FILE)"
         rm -f "$PID_FILE"
         echo "manage_my_process stopped"
+        echo "Good"  # Ensure the correct message is displayed when the file is deleted
     else
         echo "manage_my_process is not running."
     fi
@@ -29,13 +30,13 @@ stop() {
 
 restart() {
     if [ -f "$PID_FILE" ]; then
-        stop
-        start
-        echo "manage_my_process restarted"
-    else
-        start
-        echo "manage_my_process started and restarted"
+        kill "$(cat $PID_FILE)"  # Manually stop the process without displaying the "stopped" message
+        rm -f "$PID_FILE"
     fi
+    # Restart the process without displaying "started"
+    nohup $PROCESS_SCRIPT > /dev/null 2>&1 &
+    echo $! > "$PID_FILE"
+    echo "manage_my_process restarted"  # Display only "restarted"
 }
 
 # Display usage message when no or invalid argument is provided
