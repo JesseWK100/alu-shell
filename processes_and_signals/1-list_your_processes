@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Display a list of all currently running processes in the required format
+# Display a list of all currently running processes with proper alignment and format
 
-# Display processes in the correct format with headers
-ps -e -o user=USER,start=STARTED,command=COMMAND --sort=pid --forest | awk '{if(NR==1) print $1, $2, $3; else printf "%-10s %-9s %-s\n", $1, $2, substr($0, index($0,$3))}'
+# Use ps with custom headers and ensure proper column width
+ps -eo user:10,start:11,command --sort=pid --forest | head -50
