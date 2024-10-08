@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Display a list of all currently running processes in a user-friendly format with process hierarchy
+# Display a list of all currently running processes in the required format
 
-# Display process information with a tree structure
-ps -e -o user,pid,pcpu,pmem,vsz,rss,tty,stat,start,time,command --sort=pid | head -1
-ps -e -o user,pid,pcpu,pmem,vsz,rss,tty,stat,start,time,command --sort=pid --forest
+# Display processes in the correct format with headers
+ps -e -o user=USER,pid,pcpu,pmem,vsz,rss,tty,stat,start=STARTED,time,command=COMMAND --sort=pid --forest
