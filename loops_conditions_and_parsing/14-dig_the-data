@@ -1,16 +1,3 @@
 #!/usr/bin/env bash
-# This script checks for the existence of the Apache log file and outputs an error if not found
-
-# Define the log file
-log_file="access.log"
-
-# Check if the log file exists
-if [[ ! -f "$log_file" ]]; then
-  echo "Log file not found!"
-  exit 1
-fi
-
-# If the log file exists, we can process it as before, though this will not run in the current test cases.
-# awk '$9 ~ /^[0-9]+$/ {print $1, $9}' "$log_file" | \
-# awk '{count[$1 " " $2]++} END {for (entry in count) print count[entry], entry}' | \
-# sort -nr
+#script that groups visitors by IP and HTTP status code, and displays the data
+awk -F' ' '{ print $1 " " $9 }' apache-access.log | sort | uniq -c | sort -nr
