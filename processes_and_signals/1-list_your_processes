@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Display a list of all currently running processes with proper alignment and format
+#This is a script displays a list of currently running processes.
+#Must show all processes, for all users, including those which might not have a TTYY
+#Display a useer oriented format.
+#Show process hierachy
 
-# Use ps with custom headers and ensure proper column width
-ps -eo user:10,start:11,command --sort=pid --forest | head -50
+ps -a -x -u -f
